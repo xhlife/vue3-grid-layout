@@ -6,4 +6,4 @@ https://github.com/jbaysolutions/vue-grid-layout
 ### 采用vue3
 
 #### 效果
-![alt 事件队列](/result.png)
+![alt result](/result.png)
