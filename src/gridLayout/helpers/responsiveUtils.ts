@@ -1,4 +1,3 @@
-// @flow
 
 import { cloneLayout, compact, correctBounds } from './utils';
 

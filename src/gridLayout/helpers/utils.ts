@@ -1,4 +1,3 @@
-// @flow
 export type LayoutItemRequired = {
   w: number;
   h: number;
