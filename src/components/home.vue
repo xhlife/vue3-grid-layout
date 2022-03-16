@@ -11,7 +11,7 @@
       :margin="[10, 10]"
       :use-css-transforms="true"
     >
-      <!-- <grid-item
+      <grid-item
         class="my-item"
         v-for="item in chartLit"
         :x="item.x"
@@ -22,7 +22,7 @@
         :key="item.i"
       >
         {{ item.name }}
-      </grid-item> -->
+      </grid-item>
     </grid-layout>
   </div>
 </template>
