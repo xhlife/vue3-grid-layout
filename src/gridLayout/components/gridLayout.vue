@@ -258,7 +258,7 @@ watch(() => width, (newVal, oldVal) => {
   });
 });
 watch(
-  () => props.layout,
+  () => props.layout.length,
   () => layoutUpdate()
 );
 watch(
