@@ -1,5 +1,5 @@
 {
-  "name": "vue-grid-layout-next",
+  "name": "vue3-grid-layout-next",
   "version": "1.0.0",
   "type": "module",
   "description": "A draggable and resizable grid layout, as a Vue component.",
