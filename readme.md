@@ -11,7 +11,7 @@ This project js support by [vue-grid-layout](https://github.com/jbaysolutions/vu
 # Usage
 
 ```shell
-npm i vue-grid-layout@next
+npm i vue-grid-layout-next
 ```
 
 <h2 align="center">
