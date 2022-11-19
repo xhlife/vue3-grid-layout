@@ -56,7 +56,7 @@ If the responsive property is true, make sure layout is a ref object
 
 <template>
   <div class="layout">
-    <GridLayout v-model:layout="testLayout" :responsive="responsive" >
+    <GridLayout v-model:layout="layout" :responsive="responsive" >
       ...
     </GridLayout>
   </div>
