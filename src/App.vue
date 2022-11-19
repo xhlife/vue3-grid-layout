@@ -5,10 +5,10 @@ import {testData} from "./test"
 import GridLayout from "./components/Grid/GridLayout.vue"
 import GridItem from "./components/Grid/GridItem.vue"
 
-let testLayout = reactive(testData)
+let testLayout = ref(testData)
 
 function handleResize(i: string | number, w: number, h: number, x: number, y: number) {
-  // console.log(i, w, h, x, y)
+  console.log(i, w, h, x, y)
 }
 const responsive = ref<boolean>(false)
 </script>

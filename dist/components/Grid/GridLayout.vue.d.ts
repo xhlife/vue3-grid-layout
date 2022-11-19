@@ -250,7 +250,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     containerHeight: () => string;
     dragEvent: (eventName?: EventType, id?: string | number, x?: number, y?: number, h?: number, w?: number) => void;
     resizeEvent: (eventName?: EventType, id?: string | number, x?: number, y?: number, h?: number, w?: number) => void;
-    responsiveGridLayout: (id?: string | number) => void;
+    responsiveGridLayout: () => void;
     initResponsiveFeatures: () => void;
     findDifference: (layout: Layout, originalLayout: Layout) => LayoutItem[];
     GridItem: import("vue").DefineComponent<unknown, object, {}, import("vue").ComputedOptions, import("vue").MethodOptions, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<unknown>, {}>;

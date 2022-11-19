@@ -14,7 +14,7 @@ This project js support by [vue-grid-layout](https://github.com/jbaysolutions/vu
 npm i vue3-grid-layout-next
 ```
 
-<h2 align="center">
+<h2>
   <a href="https://jbaysolutions.github.io/vue-grid-layout/" target="_blank">Documentation Website</a>
 </h2>
 
@@ -26,6 +26,41 @@ npm i vue3-grid-layout-next
     {{ style }}
   </div>
 </grid-item>
+```
+
+## beware
+
+### Usage with v-model
+
+```html
+ <GridLayout v-model:layout="layout">
+  ...
+ </GridLayout>
+```
+
+### Use ref object
+
+If the responsive property is true, make sure layout is a ref object
+
+```html
+<script lang="ts" setup> 
+
+  const responsive = ref(true)
+  const layout = ref([])
+  // const layout = reactive([]) // will cause some bug
+
+  // it will work, when responsive is false
+  // const layout = reactive([])
+
+</script>
+
+<template>
+  <div class="layout">
+    <GridLayout v-model:layout="testLayout" :responsive="responsive" >
+      ...
+    </GridLayout>
+  </div>
+</template>
 ```
 
 # example 

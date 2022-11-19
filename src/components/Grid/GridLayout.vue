@@ -252,6 +252,12 @@ watch(width, (newVal, oldVal) => {
   })
 })
 watch(
+  () => props.layout,
+  () => {
+    layoutUpdate()
+  }
+)
+watch(
   () => props.layout.length,
   () => {
     layoutUpdate()
@@ -495,7 +501,7 @@ function resizeEvent(
     })
   }
 
-  if (props.responsive) responsiveGridLayout(id)
+  if (props.responsive) responsiveGridLayout()
 
   compact(props.layout, props.verticalCompact)
   eventBus.emit("compact")
@@ -505,7 +511,7 @@ function resizeEvent(
 }
 
 // finds or generates new layouts for set breakpoints
-function responsiveGridLayout(id?: string | number) {
+function responsiveGridLayout() {
   let newBreakpoint = getBreakpointFromWidth(props.breakpoints, width.value as number)
   let newCols = getColsFromBreakpoint(newBreakpoint, props.cols)
 
@@ -525,12 +531,7 @@ function responsiveGridLayout(id?: string | number) {
   )
 
   // Store the new layout.
-  if (id || layout.length !== props.layout.length) {
-    layouts.value[newBreakpoint] = props.layout
-  } else {
-    layouts.value[newBreakpoint] = layout
-  }
-  // layouts.value[newBreakpoint] = layout
+  layouts.value[newBreakpoint] = layout
 
   if (lastBreakpoint.value !== newBreakpoint) {
     emit("breakpoint-changed", newBreakpoint, layout)
