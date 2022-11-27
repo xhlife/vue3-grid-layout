@@ -3,6 +3,7 @@
     <slot></slot>
     <GridItem
       v-show="isDragging"
+      ref="defaultGridItem"
       class="vue-grid-placeholder"
       :x="placeholder.x"
       :y="placeholder.y"
@@ -86,6 +87,8 @@ import {
 import {addWindowEventListener, removeWindowEventListener, EventsData} from "@/helpers/DOM"
 // import useCurrentInstance from "@/hooks/useInstance"
 
+// const {proxy} = useCurrentInstance()
+
 // Props Data
 const props = withDefaults(defineProps<Props>(), {
   autoSize: true,
@@ -124,7 +127,8 @@ const erd = ref<elementResizeDetectorMaker.Erd | null>(null)
 const positionsBeforeDrag = ref<{[key: string]: string}>()
 // layout dom
 const this$refsLayout = ref<HTMLElement>({} as HTMLElement)
-
+// default grid item
+const defaultGridItem = ref()
 const eventBus: Emitter<{
   resizeEvent?: EventsData
   dragEvent?: EventsData
@@ -578,7 +582,9 @@ defineExpose({
   layouts,
   lastBreakpoint,
   originalLayout,
-  erd
+  erd,
+  defaultGridItem,
+  dragEvent
 })
 </script>
 

@@ -961,7 +961,10 @@ function autoSize() {
 }
 
 defineExpose({
-  autoSize
+  autoSize,
+  calcXY,
+  dragging,
+  ...props
 })
 </script>
 <style>

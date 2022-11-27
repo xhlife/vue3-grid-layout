@@ -220,6 +220,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         [key: string]: string;
     } | undefined>;
     this$refsLayout: import("vue").Ref<HTMLElement>;
+    defaultGridItem: import("vue").Ref<any>;
     eventBus: Emitter<{
         resizeEvent?: EventsData | undefined;
         dragEvent?: EventsData | undefined;
