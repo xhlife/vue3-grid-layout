@@ -35,6 +35,8 @@
     "@interactjs/dev-tools": "^1.10.17",
     "@interactjs/interact": "^1.10.17",
     "@interactjs/modifiers": "^1.10.17",
+    "@interactjs/core": "^1.10.17",
+    "@interactjs/utils": "^1.10.17",
     "element-resize-detector": "^1.2.4",
     "interactjs": "^1.10.17",
     "mitt": "^3.0.0"
