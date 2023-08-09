@@ -1,7 +1,3 @@
-import { Emitter, EventType } from "mitt";
-import elementResizeDetectorMaker from "element-resize-detector";
-import { Layout, LayoutItem } from '../../helpers/utils';
-import { EventsData } from '../../helpers/DOM';
 export interface Placeholder {
     x: number;
     y: number;
@@ -64,89 +60,42 @@ export interface LayoutData {
     };
     this$refsLayout: HTMLElement;
 }
-declare const _sfc_main: import("vue").DefineComponent<{
-    autoSize: {
-        type: BooleanConstructor;
-        required: false;
-        default: boolean;
-    };
-    colNum: {
-        type: NumberConstructor;
-        required: false;
-        default: number;
-    };
-    rowHeight: {
-        type: NumberConstructor;
-        required: false;
-        default: number;
-    };
-    maxRows: {
-        type: NumberConstructor;
-        required: false;
-        default: number;
-    };
-    margin: {
-        type: ArrayConstructor;
-        required: false;
-        default: () => number[];
-    };
+import { EventType } from "mitt";
+import elementResizeDetectorMaker from "element-resize-detector";
+import { Layout } from '../../helpers/utils';
+declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     isDraggable: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
     isResizable: {
-        type: BooleanConstructor;
-        required: false;
-        default: boolean;
-    };
-    isMirrored: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
     isBounded: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
-    useCssTransforms: {
-        type: BooleanConstructor;
-        required: false;
+    autoSize: {
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
-    verticalCompact: {
-        type: BooleanConstructor;
-        required: false;
-        default: boolean;
-    };
-    restoreOnDrag: {
-        type: BooleanConstructor;
-        required: false;
-        default: boolean;
-    };
-    layout: {
-        type: null;
-        required: true;
+    margin: {
+        type: import("vue").PropType<number[]>;
+        default: () => number[];
     };
     responsive: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
-    responsiveLayouts: {
-        type: ObjectConstructor;
-        required: false;
-        default: () => {};
-    };
-    transformScale: {
-        type: NumberConstructor;
-        required: false;
-        default: number;
-    };
-    breakpoints: {
-        type: ObjectConstructor;
-        required: false;
+    cols: {
+        type: import("vue").PropType<{
+            lg: number;
+            md: number;
+            sm: number;
+            xs: number;
+            xxs: number;
+        }>;
         default: () => {
             lg: number;
             md: number;
@@ -155,9 +104,56 @@ declare const _sfc_main: import("vue").DefineComponent<{
             xxs: number;
         };
     };
-    cols: {
-        type: ObjectConstructor;
-        required: false;
+    colNum: {
+        type: import("vue").PropType<number>;
+        default: number;
+    };
+    rowHeight: {
+        type: import("vue").PropType<number>;
+        default: number;
+    };
+    maxRows: {
+        type: import("vue").PropType<number>;
+        default: number;
+    };
+    transformScale: {
+        type: import("vue").PropType<number>;
+        default: number;
+    };
+    useCssTransforms: {
+        type: import("vue").PropType<boolean>;
+        default: boolean;
+    };
+    isMirrored: {
+        type: import("vue").PropType<boolean>;
+        default: boolean;
+    };
+    verticalCompact: {
+        type: import("vue").PropType<boolean>;
+        default: boolean;
+    };
+    restoreOnDrag: {
+        type: import("vue").PropType<boolean>;
+        default: boolean;
+    };
+    layout: {
+        type: import("vue").PropType<Layout>;
+        required: true;
+    };
+    responsiveLayouts: {
+        type: import("vue").PropType<{
+            [key: string]: any;
+        }>;
+        default: () => {};
+    };
+    breakpoints: {
+        type: import("vue").PropType<{
+            lg: number;
+            md: number;
+            sm: number;
+            xs: number;
+            xxs: number;
+        }>;
         default: () => {
             lg: number;
             md: number;
@@ -167,17 +163,14 @@ declare const _sfc_main: import("vue").DefineComponent<{
         };
     };
     preventCollision: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
     useStyleCursor: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
 }, {
-    props: any;
     width: import("vue").Ref<number | null>;
     mergeStyle: import("vue").Ref<{
         [key: string]: string;
@@ -189,7 +182,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         y: number;
         w: number;
         h: number;
-        i: number | string;
+        i: string | number;
     }>;
     layouts: import("vue").Ref<{
         [key: string]: any;
@@ -216,128 +209,83 @@ declare const _sfc_main: import("vue").DefineComponent<{
         removeAllListeners: (element: HTMLElement) => void;
         uninstall: (element: HTMLElement) => void;
     } | null>;
-    positionsBeforeDrag: import("vue").Ref<{
-        [key: string]: string;
-    } | undefined>;
-    this$refsLayout: import("vue").Ref<HTMLElement>;
     defaultGridItem: import("vue").Ref<any>;
-    eventBus: Emitter<{
-        resizeEvent?: EventsData | undefined;
-        dragEvent?: EventsData | undefined;
-        updateWidth: number | null;
-        setColNum: number;
-        setRowHeight: number;
-        setDraggable: boolean;
-        setResizable: boolean;
-        setBounded: boolean;
-        setTransformScale: number;
-        setMaxRows: number;
-        compact: void;
-    }>;
-    emit: {
-        (e: "layout-created", layout: Layout): void;
-        (e: "layout-before-mount", layout: Layout): void;
-        (e: "layout-mounted", layout: Layout): void;
-        (e: "layout-updated", layout: Layout): void;
-        (e: "layout-ready", layout: Layout): void;
-        (e: "update:layout", layout: Layout): void;
-        (e: "breakpoint-changed", newBreakpoint: string, layout: Layout): void;
-    };
-    resizeEventHandler: (data?: EventsData) => void;
-    dragEventHandler: (data?: EventsData) => void;
-    layoutUpdate: () => void;
-    updateHeight: () => void;
-    onWindowResize: () => void;
-    containerHeight: () => string;
     dragEvent: (eventName?: EventType, id?: string | number, x?: number, y?: number, h?: number, w?: number) => void;
-    resizeEvent: (eventName?: EventType, id?: string | number, x?: number, y?: number, h?: number, w?: number) => void;
-    responsiveGridLayout: () => void;
-    initResponsiveFeatures: () => void;
-    findDifference: (layout: Layout, originalLayout: Layout) => LayoutItem[];
-    GridItem: import("vue").DefineComponent<unknown, object, {}, import("vue").ComputedOptions, import("vue").MethodOptions, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<unknown>, {}>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("layout-created" | "layout-before-mount" | "layout-mounted" | "layout-updated" | "layout-ready" | "update:layout" | "breakpoint-changed")[], "layout-created" | "layout-before-mount" | "layout-mounted" | "layout-updated" | "layout-ready" | "update:layout" | "breakpoint-changed", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-    autoSize: {
-        type: BooleanConstructor;
-        required: false;
-        default: boolean;
+    layout: Layout;
+    autoSize: boolean;
+    colNum: number;
+    rowHeight: number;
+    maxRows: number;
+    margin: number[];
+    isDraggable: boolean;
+    isResizable: boolean;
+    isMirrored: boolean;
+    isBounded: boolean;
+    useCssTransforms: boolean;
+    verticalCompact: boolean;
+    restoreOnDrag: boolean;
+    responsive: boolean;
+    responsiveLayouts: {
+        [key: string]: any;
     };
-    colNum: {
-        type: NumberConstructor;
-        required: false;
-        default: number;
+    transformScale: number;
+    breakpoints: {
+        lg: number;
+        md: number;
+        sm: number;
+        xs: number;
+        xxs: number;
     };
-    rowHeight: {
-        type: NumberConstructor;
-        required: false;
-        default: number;
+    cols: {
+        lg: number;
+        md: number;
+        sm: number;
+        xs: number;
+        xxs: number;
     };
-    maxRows: {
-        type: NumberConstructor;
-        required: false;
-        default: number;
-    };
-    margin: {
-        type: ArrayConstructor;
-        required: false;
-        default: () => number[];
-    };
+    preventCollision: boolean;
+    useStyleCursor: boolean;
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+    "layout-created": (layout: Layout) => void;
+    "layout-before-mount": (layout: Layout) => void;
+    "layout-mounted": (layout: Layout) => void;
+    "layout-updated": (layout: Layout) => void;
+    "layout-ready": (layout: Layout) => void;
+    "update:layout": (layout: Layout) => void;
+    "breakpoint-changed": (newBreakpoint: string, layout: Layout) => void;
+}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     isDraggable: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
     isResizable: {
-        type: BooleanConstructor;
-        required: false;
-        default: boolean;
-    };
-    isMirrored: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
     isBounded: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
-    useCssTransforms: {
-        type: BooleanConstructor;
-        required: false;
+    autoSize: {
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
-    verticalCompact: {
-        type: BooleanConstructor;
-        required: false;
-        default: boolean;
-    };
-    restoreOnDrag: {
-        type: BooleanConstructor;
-        required: false;
-        default: boolean;
-    };
-    layout: {
-        type: null;
-        required: true;
+    margin: {
+        type: import("vue").PropType<number[]>;
+        default: () => number[];
     };
     responsive: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
-    responsiveLayouts: {
-        type: ObjectConstructor;
-        required: false;
-        default: () => {};
-    };
-    transformScale: {
-        type: NumberConstructor;
-        required: false;
-        default: number;
-    };
-    breakpoints: {
-        type: ObjectConstructor;
-        required: false;
+    cols: {
+        type: import("vue").PropType<{
+            lg: number;
+            md: number;
+            sm: number;
+            xs: number;
+            xxs: number;
+        }>;
         default: () => {
             lg: number;
             md: number;
@@ -346,9 +294,56 @@ declare const _sfc_main: import("vue").DefineComponent<{
             xxs: number;
         };
     };
-    cols: {
-        type: ObjectConstructor;
-        required: false;
+    colNum: {
+        type: import("vue").PropType<number>;
+        default: number;
+    };
+    rowHeight: {
+        type: import("vue").PropType<number>;
+        default: number;
+    };
+    maxRows: {
+        type: import("vue").PropType<number>;
+        default: number;
+    };
+    transformScale: {
+        type: import("vue").PropType<number>;
+        default: number;
+    };
+    useCssTransforms: {
+        type: import("vue").PropType<boolean>;
+        default: boolean;
+    };
+    isMirrored: {
+        type: import("vue").PropType<boolean>;
+        default: boolean;
+    };
+    verticalCompact: {
+        type: import("vue").PropType<boolean>;
+        default: boolean;
+    };
+    restoreOnDrag: {
+        type: import("vue").PropType<boolean>;
+        default: boolean;
+    };
+    layout: {
+        type: import("vue").PropType<Layout>;
+        required: true;
+    };
+    responsiveLayouts: {
+        type: import("vue").PropType<{
+            [key: string]: any;
+        }>;
+        default: () => {};
+    };
+    breakpoints: {
+        type: import("vue").PropType<{
+            lg: number;
+            md: number;
+            sm: number;
+            xs: number;
+            xxs: number;
+        }>;
         default: () => {
             lg: number;
             md: number;
@@ -358,42 +353,61 @@ declare const _sfc_main: import("vue").DefineComponent<{
         };
     };
     preventCollision: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
     useStyleCursor: {
-        type: BooleanConstructor;
-        required: false;
+        type: import("vue").PropType<boolean>;
         default: boolean;
     };
 }>> & {
-    "onLayout-created"?: ((...args: any[]) => any) | undefined;
-    "onLayout-before-mount"?: ((...args: any[]) => any) | undefined;
-    "onLayout-mounted"?: ((...args: any[]) => any) | undefined;
-    "onLayout-updated"?: ((...args: any[]) => any) | undefined;
-    "onLayout-ready"?: ((...args: any[]) => any) | undefined;
-    "onUpdate:layout"?: ((...args: any[]) => any) | undefined;
-    "onBreakpoint-changed"?: ((...args: any[]) => any) | undefined;
+    "onLayout-created"?: ((layout: Layout) => any) | undefined;
+    "onLayout-before-mount"?: ((layout: Layout) => any) | undefined;
+    "onLayout-mounted"?: ((layout: Layout) => any) | undefined;
+    "onLayout-updated"?: ((layout: Layout) => any) | undefined;
+    "onLayout-ready"?: ((layout: Layout) => any) | undefined;
+    "onUpdate:layout"?: ((layout: Layout) => any) | undefined;
+    "onBreakpoint-changed"?: ((newBreakpoint: string, layout: Layout) => any) | undefined;
 }, {
     isDraggable: boolean;
     isResizable: boolean;
     isBounded: boolean;
     autoSize: boolean;
+    margin: number[];
+    responsive: boolean;
+    cols: {
+        lg: number;
+        md: number;
+        sm: number;
+        xs: number;
+        xxs: number;
+    };
     colNum: number;
     rowHeight: number;
     maxRows: number;
-    margin: unknown[];
-    isMirrored: boolean;
+    transformScale: number;
     useCssTransforms: boolean;
+    isMirrored: boolean;
     verticalCompact: boolean;
     restoreOnDrag: boolean;
-    responsive: boolean;
-    responsiveLayouts: Record<string, any>;
-    transformScale: number;
-    breakpoints: Record<string, any>;
-    cols: Record<string, any>;
+    responsiveLayouts: {
+        [key: string]: any;
+    };
+    breakpoints: {
+        lg: number;
+        md: number;
+        sm: number;
+        xs: number;
+        xxs: number;
+    };
     preventCollision: boolean;
     useStyleCursor: boolean;
+}, {}>, {
+    default?(_: {}): any;
 }>;
-export default _sfc_main;
+export default _default;
+type __VLS_WithTemplateSlots<T, S> = T & {
+    new (): {
+        $slots: S;
+    };
+};

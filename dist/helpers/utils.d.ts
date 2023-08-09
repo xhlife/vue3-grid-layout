@@ -5,7 +5,7 @@ export interface LayoutItemRequired {
     y: number;
     i: string;
 }
-export declare type LayoutItem = LayoutItemRequired & {
+export type LayoutItem = LayoutItemRequired & {
     minW?: number;
     minH?: number;
     maxW?: number;
@@ -15,8 +15,8 @@ export declare type LayoutItem = LayoutItemRequired & {
     isDraggable?: boolean;
     isResizable?: boolean;
 };
-export declare type Layout = Array<LayoutItem>;
-export declare type Size = {
+export type Layout = Array<LayoutItem>;
+export type Size = {
     width: number;
     height: number;
 };

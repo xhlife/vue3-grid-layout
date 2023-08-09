@@ -1,4 +1,4 @@
-export declare type Direction = "ltr" | "rtl" | "auto";
+export type Direction = "ltr" | "rtl" | "auto";
 export declare function getDocumentDir(): Direction | string;
 export declare function setDocumentDir(dir: Direction): boolean;
 export declare function addWindowEventListener(event: string, callback: () => any): boolean;

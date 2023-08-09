@@ -1,13 +1,13 @@
 import type { Layout } from "./utils";
-export declare type ResponsiveLayout = {
+export type ResponsiveLayout = {
     lg?: Layout;
     md?: Layout;
     sm?: Layout;
     xs?: Layout;
     xxs?: Layout;
 };
-export declare type Breakpoint = string;
-export declare type Breakpoints = {
+export type Breakpoint = string;
+export type Breakpoints = {
     lg?: number;
     md?: number;
     sm?: number;
