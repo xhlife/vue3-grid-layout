@@ -1,6 +1,6 @@
 {
-  "name": "vue3-grid-layout-next",
-  "version": "1.0.5",
+  "name": "vue3-grid-layout-zixel",
+  "version": "1.0.0",
   "type": "module",
   "description": "A draggable and resizable grid layout, as a Vue component.",
   "keywords": [
@@ -16,10 +16,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xhlife/vue3-grid-layout.git"
+    "url": "https://github.com/N1body/vue3-grid-layout-zixel.git"
   },
   "author": "",
-  "homepage": "https://github.com/xhlife/vue3-grid-layout",
+  "homepage": "https://github.com/N1body/vue3-grid-layout-zixel",
   "main": "dist/vue3-grid-layout.js",
   "unpkg": "dist/vue3-grid-layout.umd.cjs",
   "typings": "dist/components/index.d.ts",

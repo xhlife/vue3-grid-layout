@@ -960,10 +960,19 @@ function autoSize() {
   }
 }
 
+/**
+ * 重置 GridItem 高度，重新布局
+ * @params newClientHeight 新高度
+ */
+function resetSize() {
+  eventBus.emit("resizeEvent")
+}
+
 defineExpose({
   autoSize,
   calcXY,
   dragging,
+  resetSize,
   ...props
 })
 </script>
