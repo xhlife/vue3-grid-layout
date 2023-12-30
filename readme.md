@@ -65,6 +65,6 @@ If the responsive property is true, make sure layout is a ref object
 
 # example 
 
-[demo for echart](https://cxid.gitee.io/works/work/vue3-grid-layout/index.html)
+[demo for echart](https://cxid.gitee.io/works/work/vue3-grid-layout/index.html) - [source：https://gitee.com/cxid/vue3-grid-layout-demo](https://gitee.com/cxid/vue3-grid-layout-demo)
 
 
