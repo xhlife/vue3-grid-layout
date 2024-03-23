@@ -3583,7 +3583,7 @@ const ks = {
     dragOption: { default: () => ({}) },
     resizeOption: { default: () => ({}) }
   },
-  emits: ["container-resized", "resize", "resized", "move", "moved"],
+  emits: ["container-resized", "resize", "resized", "move", "moved", "dragging", "dragend"],
   setup(e, { expose: t, emit: n }) {
     const i = e, { proxy: o } = Ps(), r = o == null ? void 0 : o.$parent, s = Oi("eventBus"), a = k({}), l = k(1), c = k(100), u = k(30), f = k([10, 10]), g = k(1 / 0), b = k(null), x = k(null), S = k(1), z = k(!0), H = k(!0), T = k(!1), C = k(null), m = k(!1), d = k(null), R = k(NaN), w = k(NaN), N = k(NaN), K = k(NaN), A = k({}), J = k(!1), y = k(!1), D = k(!1), B = k(null), Y = k(null), V = k(null), Z = k(null), M = k(i.x), Q = k(i.y), it = k(i.w), tt = k(i.h), st = k(null), G = k(null), fe = Xt(() => x.value && !i.static), _e = Xt(() => (b.value || x.value) && !i.static), Ce = Xt(() => navigator.userAgent.toLowerCase().indexOf("android") !== -1), ct = Xt(() => r != null && r.isMirrored ? !J.value : J.value), de = Xt(() => ({
       "vue-resizable": fe.value,
@@ -3785,6 +3785,7 @@ const ks = {
         case "dragend": {
           if (!T.value)
             return;
+          n("dragend", h, i.i);
           const ht = h.target;
           let Pt = ht.offsetParent.getBoundingClientRect(), It = ht.getBoundingClientRect();
           const ee = It.left / S.value, ne = Pt.left / S.value, De = It.right / S.value, Pe = Pt.right / S.value, ke = It.top / S.value, Ae = Pt.top / S.value;
@@ -3792,6 +3793,7 @@ const ks = {
           break;
         }
         case "dragmove": {
+          n("dragging", h, i.i);
           const ht = mn(R.value, w.value, L, X);
           if (ct.value ? O.left = Number((ot = C.value) == null ? void 0 : ot.left) - ht.deltaX / S.value : O.left = Number((j = C.value) == null ? void 0 : j.left) + ht.deltaX / S.value, O.top = Number((ge = C.value) == null ? void 0 : ge.top) + ht.deltaY / S.value, st.value) {
             const It = h.target.offsetParent.clientHeight - Zt(i.h, u.value, f.value[1]);

@@ -28,6 +28,23 @@ npm i vue3-grid-layout-next
 </grid-item>
 ```
 
+## add dragging、 dragend event
+
+```html
+<grid-item
+  @dragging="doSomething"
+  @dragend="doSomethingEnd"
+  >
+</grid-item>
+
+<script lang="ts" setup> 
+
+  function doSomethin(event: MouseEvent, i: number | string) {
+    
+  }
+</script>
+```
+
 ## beware
 
 ### Usage with v-model

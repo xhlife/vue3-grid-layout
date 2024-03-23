@@ -69,6 +69,8 @@ const emit = defineEmits<{
   (e: "resized", i: number | string, h: number, w: number, height: number, width: number): void
   (e: "move", i: number | string, x: number, y: number): void
   (e: "moved", i: number | string, x: number, y: number): void
+  (e: "dragging", event: MouseEvent, i: number | string): void
+  (e: "dragend", event: MouseEvent, i: number | string): void
 }>()
 
 interface PropsChild {
@@ -589,9 +591,10 @@ function handleDrag(event: MouseEvent) {
   const position = getControlPosition(event)
 
   // Get the current drag point from the event. This is used as the offset.
-  if (position === null) return // not possible but satisfies flow
-  const {x, y} = position
+  if (position === null) return
 
+  // not possible but satisfies flow
+  const {x, y} = position
   // let shouldUpdate = false;
   let newPosition = {top: 0, left: 0}
   switch (event.type) {
@@ -623,6 +626,7 @@ function handleDrag(event: MouseEvent) {
     }
     case "dragend": {
       if (!isDragging.value) return
+      emit("dragend", event, props.i)
       const tg = event.target as HTMLElement
       const parentTg = tg.offsetParent as HTMLElement
       let parentRect = parentTg.getBoundingClientRect()
@@ -650,6 +654,7 @@ function handleDrag(event: MouseEvent) {
       break
     }
     case "dragmove": {
+      emit("dragging", event, props.i)
       const coreEvent = createCoreData(lastX.value, lastY.value, x, y)
       //                        Add rtl support
       if (renderRtl.value) {

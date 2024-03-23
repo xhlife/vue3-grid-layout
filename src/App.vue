@@ -4,7 +4,7 @@ import {testData} from "./test"
 
 import GridLayout from "./components/Grid/GridLayout.vue"
 import GridItem from "./components/Grid/GridItem.vue"
-
+import ExampleOne from "./example/exampleOne.vue"
 let testLayout = ref(testData)
 
 const refLayout = ref()
@@ -60,7 +60,7 @@ function drag(e: DragEvent) {
     } catch {}
     let el = mapCache.get("drop")
     if (!el) return
-    console.log("jjj")
+    // console.log("jjj")
 
     el.dragging = {top: mouseXY.y - parentRect.top, left: mouseXY.x - parentRect.left}
     let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left)
@@ -162,6 +162,7 @@ onMounted(() => {
       </GridLayout>
     </div>
   </div>
+  <ExampleOne></ExampleOne>
 </template>
 
 <style scoped>

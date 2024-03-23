@@ -121,6 +121,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     resized: (i: string | number, h: number, w: number, height: number, width: number) => void;
     move: (i: string | number, x: number, y: number) => void;
     moved: (i: string | number, x: number, y: number) => void;
+    dragging: (event: MouseEvent, i: string | number) => void;
+    dragend: (event: MouseEvent, i: string | number) => void;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     x: {
         type: import("vue").PropType<number>;
@@ -203,11 +205,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => {};
     };
 }>> & {
+    onDragend?: ((event: MouseEvent, i: string | number) => any) | undefined;
     onResize?: ((i: string | number, h: number, w: number, height: number, width: number) => any) | undefined;
     "onContainer-resized"?: ((i: string | number, h: number, w: number, height: number, width: number) => any) | undefined;
     onResized?: ((i: string | number, h: number, w: number, height: number, width: number) => any) | undefined;
     onMove?: ((i: string | number, x: number, y: number) => any) | undefined;
     onMoved?: ((i: string | number, x: number, y: number) => any) | undefined;
+    onDragging?: ((event: MouseEvent, i: string | number) => any) | undefined;
 }, {
     isDraggable: boolean | null;
     isResizable: boolean | null;
