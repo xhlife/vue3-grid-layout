@@ -5,6 +5,7 @@ import {testData} from "./test"
 import GridLayout from "./components/Grid/GridLayout.vue"
 import GridItem from "./components/Grid/GridItem.vue"
 import ExampleOne from "./example/exampleOne.vue"
+import CustomGridItem from "./CustomGridItem.vue"
 let testLayout = ref(testData)
 
 const refLayout = ref()
@@ -16,10 +17,11 @@ const mapCache: Map<string, any> = new Map()
 function handleResize(i: string | number, w: number, h: number, x: number, y: number) {
   console.log(i, w, h, x, y)
 }
-const responsive = ref<boolean>(true)
+const responsive = ref<boolean>(false)
 
 function set$Children(vm: any) {
   if (vm && vm.i) {
+    // console.log(vm.autoSize())
     mapCache.set(vm.i, vm)
   }
 }
@@ -115,6 +117,10 @@ function addDragOverEvent(e: DragEvent) {
 onMounted(() => {
   document.addEventListener("dragover", addDragOverEvent)
 })
+
+const handleMousedown = (index: number) => {
+  testLayout.value.splice(index, 1)
+}
 </script>
 
 <template>
@@ -133,36 +139,20 @@ onMounted(() => {
         ref="refLayout"
         v-model:layout="testLayout"
         :responsive="responsive"
-        :col-num="12"
+        :col-num="15"
         :row-height="30"
-        :vertical-compact="true"
-        :use-css-transforms="true"
+        :vertical-compact="false"
+        :use-css-transforms="false"
+        :margin="[10, 10]"
+        class="grid"
+        :is-mirrored="false"
+        :restore-on-drag="true"
       >
-        <grid-item
-          v-for="item in testLayout"
-          :ref="el => set$Children(el)"
-          :key="item.i"
-          class="test"
-          :x="item.x"
-          :y="item.y"
-          :w="item.w"
-          :h="item.h"
-          :i="item.i"
-          :min-h="3"
-          :min-w="3"
-          @resized="handleResize"
-        >
-          <!--<custom-drag-element :text="item.i"></custom-drag-element>-->
-          <div>
-            {{ item.i }}
-            <!-- {{ style }} -->
-          </div>
-          <!--<button @click="clicked">CLICK ME!</button>-->
-        </grid-item>
+      <CustomGridItem v-for="item in testLayout" :item="item"></CustomGridItem>
       </GridLayout>
     </div>
   </div>
-  <ExampleOne></ExampleOne>
+  <!-- <ExampleOne></ExampleOne> -->
 </template>
 
 <style scoped>
@@ -179,5 +169,20 @@ onMounted(() => {
   border: 1px solid black;
   margin: 10px 0;
   padding: 10px;
+}
+.grid::before {
+    content: '';
+    background-size: calc(calc(100% - 5px) / 12) 40px;
+    background-image: linear-gradient(
+            to right,
+            lightgrey 1px,
+            transparent 1px
+    ),
+    linear-gradient(to bottom, lightgrey 1px, transparent 1px);
+    height: calc(100% - 5px);
+    width: calc(100% - 5px);
+    position: absolute;
+    background-repeat: repeat;
+    margin:5px;
 }
 </style>

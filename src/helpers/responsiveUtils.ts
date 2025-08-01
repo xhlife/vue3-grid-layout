@@ -4,7 +4,7 @@ import type {Layout} from "./utils"
 export type ResponsiveLayout = {lg?: Layout; md?: Layout; sm?: Layout; xs?: Layout; xxs?: Layout}
 export type Breakpoint = string
 export type Breakpoints = {lg?: number; md?: number; sm?: number; xs?: number; xxs?: number}
-
+export type CompactType = "horizontal" | "vertical";
 /**
  * Given a width, find the highest breakpoint that matches is valid for it (width > breakpoint).
  *

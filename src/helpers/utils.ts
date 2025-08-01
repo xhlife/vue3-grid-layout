@@ -464,18 +464,33 @@ export function setTopRight(
  * @return {Array}        Layout, sorted static items first.
  */
 export function sortLayoutItemsByRowCol(layout: Layout): Layout {
-  const a: Array<LayoutItem> = []
-  return a.concat(layout).sort(function (a, b) {
-    if (a.y === b.y && a.x === b.x) {
-      return 0
-    }
+  // const a: Array<LayoutItem> = []
+  // return a.concat(layout).sort(function (a, b) {
+  //   if (a.y === b.y && a.x === b.x) {
+  //     return 0
+  //   }
 
-    if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
-      return 1
-    }
+  //   if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
+  //     return 1
+  //   }
 
-    return -1
-  })
+  //   return -1
+  // })
+  return sortLayoutItemsByColRow(layout)
+}
+
+/**
+ * Sort layout items by column ascending then row ascending.
+ *
+ * Does not modify Layout.
+ */
+export function sortLayoutItemsByColRow(layout: Layout): Layout {
+  return layout.slice(0).sort(function (a, b) {
+    if (a.x > b.x || (a.x === b.x && a.y > b.y)) {
+      return 1;
+    }
+    return -1;
+  });
 }
 
 /**

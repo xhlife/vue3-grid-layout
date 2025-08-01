@@ -30,14 +30,8 @@ import {Props, LayoutData} from "./GridLayout.vue"
 
 import {Interactable} from "@interactjs/core/Interactable"
 
-import useCurrentInstance from "@/hooks/useInstance"
-const {proxy} = useCurrentInstance()
-
-// for parent's instance
-// const thisLayout: (Props & LayoutData) | undefined = inject("thisLayout")
 type Ins = (Props & LayoutData) | undefined
-const thisLayout = proxy?.$parent as Ins
-// console.log(thisLayout)
+const thisLayout: Ins = inject("thisLayout")
 
 // eventBus
 const eventBus = inject("eventBus") as Emitter<{
@@ -442,7 +436,6 @@ function createStyle() {
     innerW.value = props.w
   }
   let pos = calcPosition(innerX.value, innerY.value, innerW.value, innerH.value)
-
   if (isDragging.value) {
     pos.top = dragging.value?.top as number
     //                    Add rtl support
@@ -491,97 +484,95 @@ function emitContainerResized() {
 }
 
 function handleResize(event: MouseEvent) {
-  {
-    if (props.static) return
-    const position = getControlPosition(event)
-    // Get the current drag point from the event. This is used as the offset.
-    if (position == null) return // not possible but satisfies flow
-    const {x, y} = position
-
-    const newSize = {width: 0, height: 0}
-    let pos
-    switch (event.type) {
-      case "resizestart": {
-        tryMakeResizable()
-        previousW.value = innerW.value
-        previousH.value = innerH.value
-        pos = calcPosition(innerX.value, innerY.value, innerW.value, innerH.value)
-        newSize.width = pos.width
-        newSize.height = pos.height
-        resizing.value = newSize
-        isResizing.value = true
-        break
+  if (props.static) return
+  const position = getControlPosition(event)
+  // Get the current drag point from the event. This is used as the offset.
+  if (position == null) return // not possible but satisfies flow
+  const {x, y} = position
+  const newSize = {width: 0, height: 0}
+  let pos
+  switch (event.type) {
+    case "resizestart": {
+      tryMakeResizable()
+      previousW.value = innerW.value
+      previousH.value = innerH.value
+      pos = calcPosition(innerX.value, innerY.value, innerW.value, innerH.value)
+      newSize.width = pos.width
+      newSize.height = pos.height
+      resizing.value = newSize
+      isResizing.value = true
+      break
+    }
+    case "resizemove": {
+      //                        console.log("### resize => " + event.type + ", lastW=" + this.lastW + ", lastH=" + this.lastH);
+      const coreEvent = createCoreData(lastW.value, lastH.value, x, y)
+      if (renderRtl.value) {
+        newSize.width = Number(resizing.value?.width) - coreEvent.deltaX / transformScale.value
+      } else {
+        newSize.width = Number(resizing.value?.width) + coreEvent.deltaX / transformScale.value
       }
-      case "resizemove": {
-        //                        console.log("### resize => " + event.type + ", lastW=" + this.lastW + ", lastH=" + this.lastH);
-        const coreEvent = createCoreData(lastW.value, lastH.value, x, y)
-        if (renderRtl.value) {
-          newSize.width = Number(resizing.value?.width) - coreEvent.deltaX / transformScale.value
-        } else {
-          newSize.width = Number(resizing.value?.width) + coreEvent.deltaX / transformScale.value
-        }
-        newSize.height = Number(resizing.value?.height) + coreEvent.deltaY / transformScale.value
+      newSize.height = Number(resizing.value?.height) + coreEvent.deltaY / transformScale.value
 
-        ///console.log("### resize => " + event.type + ", deltaX=" + coreEvent.deltaX + ", deltaY=" + coreEvent.deltaY);
-        resizing.value = newSize
-        break
-      }
-      case "resizeend": {
-        //console.log("### resize end => x=" +this.innerX + " y=" + this.innerY + " w=" + this.innerW + " h=" + this.innerH);
-        pos = calcPosition(innerX.value, innerY.value, innerW.value, innerH.value)
-        newSize.width = pos.width
-        newSize.height = pos.height
-        //                        console.log("### resize end => " + JSON.stringify(newSize));
-        resizing.value = null
-        isResizing.value = false
-        break
-      }
+      ///console.log("### resize => " + event.type + ", deltaX=" + coreEvent.deltaX + ", deltaY=" + coreEvent.deltaY);
+      resizing.value = newSize
+      break
     }
-
-    // Get new WH
-    pos = calcWH(newSize.height, newSize.width)
-    if (pos.w < props.minW) {
-      pos.w = props.minW
+    case "resizeend": {
+      //console.log("### resize end => x=" +this.innerX + " y=" + this.innerY + " w=" + this.innerW + " h=" + this.innerH);
+      pos = calcPosition(innerX.value, innerY.value, innerW.value, innerH.value)
+      newSize.width = pos.width
+      newSize.height = pos.height
+      //                        console.log("### resize end => " + JSON.stringify(newSize));
+      resizing.value = null
+      isResizing.value = false
+      break
     }
-    if (pos.w > props.maxW) {
-      pos.w = props.maxW
-    }
-    if (pos.h < props.minH) {
-      pos.h = props.minH
-    }
-    if (pos.h > props.maxH) {
-      pos.h = props.maxH
-    }
-
-    if (pos.h < 1) {
-      pos.h = 1
-    }
-    if (pos.w < 1) {
-      pos.w = 1
-    }
-
-    lastW.value = x
-    lastH.value = y
-
-    if (innerW.value !== pos.w || innerH.value !== pos.h) {
-      emit("resize", props.i, pos.h, pos.w, newSize.height, newSize.width)
-    }
-    if (
-      event.type === "resizeend" &&
-      (previousW.value !== innerW.value || previousH.value !== innerH.value)
-    ) {
-      emit("resized", props.i, pos.h, pos.w, newSize.height, newSize.width)
-    }
-    const data = {
-      eventType: event.type,
-      i: props.i,
-      x: innerX.value,
-      y: innerY.value,
-      h: pos.h,
-      w: pos.w
-    }
-    eventBus.emit("resizeEvent", data)
   }
+
+  // Get new WH
+  pos = calcWH(newSize.height, newSize.width)
+
+  if (pos.w < props.minW) {
+    pos.w = props.minW
+  }
+  if (pos.w > props.maxW) {
+    pos.w = props.maxW
+  }
+  if (pos.h < props.minH) {
+    pos.h = props.minH
+  }
+  if (pos.h > props.maxH) {
+    pos.h = props.maxH
+  }
+
+  if (pos.h < 1) {
+    pos.h = 1
+  }
+  if (pos.w < 1) {
+    pos.w = 1
+  }
+
+  lastW.value = x
+  lastH.value = y
+
+  if (innerW.value !== pos.w || innerH.value !== pos.h) {
+    emit("resize", props.i, pos.h, pos.w, newSize.height, newSize.width)
+  }
+  if (
+    event.type === "resizeend" &&
+    (previousW.value !== innerW.value || previousH.value !== innerH.value)
+  ) {
+    emit("resized", props.i, pos.h, pos.w, newSize.height, newSize.width)
+  }
+  const data = {
+    eventType: event.type,
+    i: props.i,
+    x: innerX.value,
+    y: innerY.value,
+    h: pos.h,
+    w: pos.w
+  }
+  eventBus.emit("resizeEvent", data)
 }
 
 function handleDrag(event: MouseEvent) {
@@ -820,7 +811,6 @@ function updateWidth(width: number, colNum?: number) {
   }
 }
 function selfCompact(layout?: Layout) {
-  const a = layout
   createStyle()
 }
 
@@ -828,7 +818,6 @@ function tryMakeDraggable() {
   if (interactObj.value === null || interactObj.value === undefined) {
     interactObj.value = interact(this$refsItem.value)
     if (!useStyleCursor.value) {
-      // @ts-ignore
       interactObj.value.styleCursor(false)
     }
   }
@@ -848,7 +837,6 @@ function tryMakeDraggable() {
       })
     }
   } else {
-    // @ts-ignore
     interactObj.value.draggable({
       enabled: false
     })
@@ -858,7 +846,6 @@ function tryMakeResizable() {
   if (interactObj.value === null || interactObj.value === undefined) {
     interactObj.value = interact(this$refsItem.value)
     if (!useStyleCursor.value) {
-      // @ts-ignore
       interactObj.value.styleCursor(false)
     }
   }
@@ -900,8 +887,7 @@ function tryMakeResizable() {
         })
       ]
     }
-
-    // @ts-ignore
+    
     interactObj.value.resizable(opts)
     if (!resizeEventSet.value) {
       resizeEventSet.value = true
@@ -910,7 +896,6 @@ function tryMakeResizable() {
       })
     }
   } else {
-    // @ts-ignore
     interactObj.value.resizable({
       enabled: false
     })
@@ -921,9 +906,12 @@ function autoSize() {
   // ok here we want to calculate if a resize is needed
   previousW.value = innerW.value
   previousH.value = innerH.value
-
+  
   // @ts-ignore
-  let newSize = $slots?.default[0].elm.getBoundingClientRect()
+  const vm = $slots.default()[0]
+  console.log(vm)
+  return
+  let newSize = vm.el?.getBoundingClientRect()
   let pos = calcWH(newSize.height, newSize.width, true)
   if (pos.w < props.minW) {
     pos.w = props.minW

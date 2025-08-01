@@ -85,10 +85,9 @@ import {
 } from "@/helpers/responsiveUtils"
 
 import {addWindowEventListener, removeWindowEventListener, EventsData} from "@/helpers/DOM"
-// import useCurrentInstance from "@/hooks/useInstance"
+import useCurrentInstance from "@/hooks/useInstance"
 
-// const {proxy} = useCurrentInstance()
-
+const {proxy} = useCurrentInstance()
 // Props Data
 const props = withDefaults(defineProps<Props>(), {
   autoSize: true,
@@ -144,7 +143,7 @@ const eventBus: Emitter<{
 }> = mitt()
 
 provide("eventBus", eventBus)
-// provide("thisLayout", proxy)
+provide("thisLayout", proxy)
 // add listen
 const emit = defineEmits<{
   (e: "layout-created", layout: Layout): void
